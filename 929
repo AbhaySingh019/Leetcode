@@ -1,0 +1,52 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stdbool.h>
+
+#define MAX_EMAILS 100
+#define MAX_LEN 100
+
+bool isUnique(char processed[][MAX_LEN], int count, char *email) {
+    for (int i = 0; i < count; i++) {
+        if (strcmp(processed[i], email) == 0)
+            return false;
+    }
+    return true;
+}
+
+void normalizeEmail(char *email, char *result) {
+    int i = 0, j = 0;
+    bool ignore = false;
+
+    while (email[i] != '@') {
+        if (email[i] == '+') {
+            ignore = true;
+        } else if (!ignore && email[i] != '.') {
+            result[j++] = email[i];
+        }
+        i++;
+    }
+
+
+    while (email[i] != '\0') {
+        result[j++] = email[i++];
+    }
+
+    result[j] = '\0';
+}
+
+int numUniqueEmails(char** emails, int emailsSize) {
+    char processed[MAX_EMAILS][MAX_LEN];
+    int uniqueCount = 0;
+
+    for (int i = 0; i < emailsSize; i++) {
+        char normalized[MAX_LEN];
+        normalizeEmail(emails[i], normalized);
+
+        if (isUnique(processed, uniqueCount, normalized)) {
+            strcpy(processed[uniqueCount++], normalized);
+        }
+    }
+
+    return uniqueCount;
+}
