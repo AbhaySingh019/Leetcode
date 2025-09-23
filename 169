@@ -1,0 +1,16 @@
+class Solution(object):
+    def majorityElement(self, nums):
+        counts={}
+        for num in nums:
+            if num not in counts:
+                counts[num]=1
+            else:
+                counts[num]+=1
+        max_count=0
+        max_element = None
+        for key, value in counts.items():
+            if value>max_count:
+                max_count=value
+                max_element = key
+        return max_element
+    
