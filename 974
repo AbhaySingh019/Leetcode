@@ -1,0 +1,19 @@
+class Solution:
+    def subarraysDivByK(self, nums: List[int], k: int) -> int:
+        count = 0
+        prefix_sum = 0
+        remainder_count = defaultdict(int)
+        remainder_count[0] = 1  # Base case: empty prefix
+
+        for num in nums:
+            prefix_sum += num
+            remainder = prefix_sum % k
+
+            # Normalize negative remainders
+            if remainder < 0:
+                remainder += k
+
+            count += remainder_count[remainder]
+            remainder_count[remainder] += 1
+
+        return count
