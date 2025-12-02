@@ -1,0 +1,16 @@
+class Solution(object):
+    def isSumEqual(self, firstWord, secondWord, targetWord):
+        def s(x):
+            a = 0
+            c = len(x)
+            for i in x:
+                
+                b = (ord(i)-97)
+                a += b*(10**c)
+                c = c - 1
+            return a
+
+        if s(firstWord) + s(secondWord) == s(targetWord):
+            return True
+        else:
+            return False
